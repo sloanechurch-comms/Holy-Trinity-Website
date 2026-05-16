@@ -48,7 +48,7 @@ After that, `vercel` and `vercel --prod` will work from your machine.
 
 ## Domain configuration
 
-Once you have your final domain (e.g. `htss.org`):
+Once you have your final domain (e.g. `sloanechurch.org`):
 
 1. In Vercel: Project → Settings → Domains → **Add**.
 2. Enter the domain. Vercel will give you DNS records to add at your domain registrar.
@@ -57,8 +57,8 @@ Once you have your final domain (e.g. `htss.org`):
 
 After the domain is live, update:
 
-- `.env` and Vercel environment variables: `VITE_SITE_URL=https://htss.org` (no trailing slash).
-- Sanity CORS origins: add `https://htss.org` (sanity.io/manage → API → CORS Origins).
+- `.env` and Vercel environment variables: `VITE_SITE_URL=https://sloanechurch.org` (no trailing slash).
+- Sanity CORS origins: add `https://sloanechurch.org` (sanity.io/manage → API → CORS Origins).
 
 ## Environment variables
 
@@ -69,7 +69,7 @@ Set these in Vercel: Project → Settings → Environment Variables. After chang
 | `VITE_SANITY_PROJECT_ID` | The project ID from sanity.io/manage |
 | `VITE_SANITY_DATASET` | `production` |
 | `VITE_SANITY_API_VERSION` | A date like `2026-05-16` |
-| `VITE_SITE_URL` | `https://htss.org` (or your real production URL) |
+| `VITE_SITE_URL` | `https://sloanechurch.org` (or your real production URL) |
 | `VITE_GA4_MEASUREMENT_ID` | `G-XXXXXXXXXX` once you have Google Analytics; otherwise leave blank |
 
 ## When a deploy fails

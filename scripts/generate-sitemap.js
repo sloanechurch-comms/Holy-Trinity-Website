@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-// Generates public/sitemap.xml from the known static routes plus optional
-// CMS routes if Sanity credentials are present. Excludes /admin, /search,
-// and the 404 route. Run automatically by `npm run build`.
+// Generates public/sitemap.xml and public/robots.txt from VITE_SITE_URL.
+// Sitemap includes static routes plus optional CMS routes if Sanity
+// credentials are present. Excludes /admin, /search, and the 404 route.
+// Run automatically by `npm run build`.
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -10,7 +11,7 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const root = path.resolve(__dirname, '..');
-const SITE_URL = (process.env.VITE_SITE_URL || 'https://htss.org').replace(/\/$/, '');
+const SITE_URL = (process.env.VITE_SITE_URL || 'https://sloanechurch.org').replace(/\/$/, '');
 
 const STATIC_ROUTES = [
   '/',
@@ -82,10 +83,22 @@ async function main() {
 ${all.map(urlEntry).join('\n')}
 </urlset>
 `;
-  const outPath = path.join(root, 'public', 'sitemap.xml');
-  await fs.writeFile(outPath, xml, 'utf8');
+  const sitemapPath = path.join(root, 'public', 'sitemap.xml');
+  await fs.writeFile(sitemapPath, xml, 'utf8');
   // eslint-disable-next-line no-console
-  console.log(`[sitemap] wrote ${all.length} routes to ${path.relative(root, outPath)}`);
+  console.log(`[sitemap] wrote ${all.length} routes to ${path.relative(root, sitemapPath)}`);
+
+  const robots = `User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+Sitemap: ${SITE_URL}/sitemap.xml
+`;
+  const robotsPath = path.join(root, 'public', 'robots.txt');
+  await fs.writeFile(robotsPath, robots, 'utf8');
+  // eslint-disable-next-line no-console
+  console.log(`[sitemap] wrote robots.txt with sitemap URL ${SITE_URL}/sitemap.xml`);
 }
 
 main().catch((err) => {

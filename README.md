@@ -1,6 +1,8 @@
 # Holy Trinity Sloane Square Website
 
-The parish website for [Holy Trinity Sloane Square](https://htss.org). Built with React, Vite, Tailwind, React Router, and Sanity. The Sanity Studio is embedded into the same site at `/admin`, so the day-to-day editing experience is one login away.
+The parish website for [Holy Trinity Sloane Square](https://sloanechurch.org). Built with React, Vite, Tailwind, React Router, and Sanity. The Sanity Studio is embedded into the same site at `/admin`, so the day-to-day editing experience is one login away.
+
+The site currently runs from a staging URL at https://htss-website.vercel.app while we prepare for the cutover. When the parish is ready, DNS for sloanechurch.org will be pointed at Vercel and the `VITE_SITE_URL` env var will be updated; everything else stays as-is.
 
 ## Before you start
 

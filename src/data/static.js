@@ -1,6 +1,6 @@
 export const SITE_NAME = 'Holy Trinity Sloane Square';
 export const SITE_TAGLINE = 'Anglican worship in Chelsea, in the Catholic tradition of the Church of England';
-export const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://htss.org';
+export const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://sloanechurch.org';
 
 export const FALLBACK_SETTINGS = {
   openingHours: '10am – 5pm, Monday to Saturday',

@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/
 
-Sitemap: https://htss.org/sitemap.xml
+Sitemap: https://sloanechurch.org/sitemap.xml

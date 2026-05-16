@@ -8,7 +8,7 @@ export default function CookiePage() {
     <>
       <Meta
         title="Cookie policy"
-        description="The cookies used at sloanechurch.org and htss.org, and how to change your preferences."
+        description="The cookies used at sloanechurch.org, and how to change your preferences."
       />
       <PageHero
         eyebrow="Cookies"

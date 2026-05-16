@@ -86,7 +86,7 @@ Sanity needs to know that your local development environment is allowed to talk 
 2. Go to **API** → **CORS Origins**.
 3. Click **Add CORS Origin**.
 4. Origin: `http://localhost:5173`. Tick **Allow credentials**. Save.
-5. Later, when you have a live URL, repeat this with your production URL (e.g. `https://htss.org`).
+5. Later, when you have a live URL, repeat this with your production URL (e.g. `https://sloanechurch.org`).
 
 ## Step 6 — Run the site locally
 

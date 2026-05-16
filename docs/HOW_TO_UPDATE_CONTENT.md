@@ -5,7 +5,7 @@ A guide for parish staff. No code knowledge needed; you will work entirely in a 
 ## How to log in
 
 1. Open the live website.
-2. Go to `/admin` (e.g. `https://htss.org/admin`).
+2. Go to `/admin` (e.g. `https://sloanechurch.org/admin`, or the current staging URL).
 3. Log in with your Sanity account. The first time, the Rector or whoever set up the site will need to invite you. Ask them to add you as an Editor in `sanity.io/manage`.
 
 You will see a sidebar on the left with sections: Worship, Events, People, Governance, News and notices, Page content blocks, Site settings.

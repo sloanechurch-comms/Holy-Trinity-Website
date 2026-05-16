@@ -23,7 +23,7 @@ This means the site can't find your Sanity project ID. Two places to check:
 Sanity needs to know your URL is allowed. Open sanity.io/manage → your project → API → CORS Origins. Add:
 
 - `http://localhost:5173` for local development.
-- Your production URL (e.g. `https://htss.org`) for the live site.
+- Your production URL (e.g. `https://sloanechurch.org`) for the live site.
 
 For both, tick **Allow credentials**.
 
