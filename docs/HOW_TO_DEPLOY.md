@@ -1,20 +1,50 @@
 # How to deploy
 
-The site is hosted on [Vercel](https://vercel.com). Day-to-day, you do not deploy anything manually: every push to the `main` branch on GitHub triggers an automatic deploy. Every push to a non-main branch creates a preview deployment with its own URL.
+The site is hosted on [Vercel](https://vercel.com) and is already live at https://htss-website.vercel.app.
 
-## How a deploy happens
+## Two kinds of change, two different stories
 
-1. You (or a developer) push a commit to the `main` branch on GitHub.
-2. Vercel notices and starts a build.
-3. Vercel runs `npm install`, then `npm run build` (which generates `sitemap.xml` and bundles the site).
-4. If the build succeeds, the new version goes live within a couple of minutes.
-5. The Vercel dashboard shows the deploy status. You can see the URL of each preview deploy from the Vercel project page.
+- **Content changes** (events, news, staff, page text, site settings): happen entirely in the `/admin` Sanity Studio. They appear on the live site within seconds. **You do not deploy for content changes.** This covers ~99% of what the parish will ever update.
 
-You do not have to do anything for content changes. **Content changes happen in `/admin` and appear instantly.** Deploys only happen when the code changes.
+- **Code changes** (anything in `src/`, `package.json`, configuration, design changes): require a code deploy via the Vercel CLI. See below.
+
+## Why we don't use GitHub auto-deploy
+
+In a typical Vercel setup, pushes to GitHub's `main` branch trigger automatic deploys. We intentionally did not set this up for HTSS, because the parish's GitHub org (`sloanechurch-comms`) and the Vercel account that owns this project belong to different identity chains. Connecting them cleanly would mean entangling identities that are better kept separate. Manual CLI deploys are simpler and only happen when code actually changes.
+
+## How a code deploy happens
+
+From the project folder on your computer:
+
+```bash
+# Preview deploy (creates a unique URL, doesn't affect production)
+vercel
+
+# Production deploy (updates the live site)
+vercel --prod
+```
+
+That's it. The first time you run this you'll be asked to log in to Vercel (browser flow); after that it remembers you.
+
+Always run a preview deploy first, click around the preview URL, *then* promote to production with `vercel --prod`. Don't push directly to production if you're not certain about the change.
 
 ## Setting up Vercel for the first time
 
-See `docs/INITIAL_SETUP.md`, Step 8.
+The Vercel project is already created and linked. The first time you want to deploy from a new computer:
+
+```bash
+# 1. Install the Vercel CLI globally
+npm install -g vercel
+
+# 2. Log in (browser flow)
+vercel login
+
+# 3. From inside the project folder, link to the existing project
+vercel link
+# Choose: existing project → htss-website
+```
+
+After that, `vercel` and `vercel --prod` will work from your machine.
 
 ## Domain configuration
 
@@ -67,17 +97,30 @@ Then fix the broken commit locally and push a new working version.
 
 ## How to do a preview deploy
 
-Useful for showing the Rector a draft of a content change before it goes live (or for testing a major code change).
+Useful for showing the Rector a draft of a code change before it goes live.
 
-1. Make your changes on a new branch:
-   ```bash
-   git checkout -b try-new-homepage
-   git add .
-   git commit -m "Try new homepage hero"
-   git push -u origin try-new-homepage
-   ```
-2. Vercel automatically builds the branch and gives you a preview URL.
-3. Share the preview URL with whoever needs to see it.
-4. When you're happy, merge the branch into `main`. The merged version goes live automatically.
+From the project folder:
 
-If you are not comfortable with the git step, ask Claude or a developer to walk you through it. It's a normal part of any web project and is worth getting comfortable with eventually.
+```bash
+vercel
+```
+
+That builds and uploads a preview, then prints a unique URL like `https://htss-website-abc123-rosie-1863s-projects.vercel.app`. Share it with whoever needs to see it. If they approve, promote with:
+
+```bash
+vercel --prod
+```
+
+This pushes the same build to the production URL.
+
+## Pushing code to GitHub
+
+Code changes should still be committed and pushed to GitHub for version control and history, even though Vercel doesn't deploy from there:
+
+```bash
+git add .
+git commit -m "Describe the change"
+git push origin main
+```
+
+Push and deploy are now two separate steps. Get into the habit of doing both, in either order.
