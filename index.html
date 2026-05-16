@@ -20,12 +20,11 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap"
     />
-
-    <title>Holy Trinity Sloane Square</title>
-    <meta
-      name="description"
-      content="Anglican worship in Chelsea, in the Catholic tradition of the Church of England. Holy Trinity Sloane Square is a Grade I listed Arts and Crafts parish church."
-    />
+    <!-- <title> and <meta name="description"> are injected per-page by the
+         <Meta> component (vite-react-ssg's <Head>) so each route gets its
+         own SEO tags at build time. Do not add a fallback here; a missing
+         title means a page is missing its <Meta>, which should be fixed
+         on that page rather than masked here. -->
   </head>
   <body>
     <div id="root"></div>

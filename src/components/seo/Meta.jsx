@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import { Head } from 'vite-react-ssg';
 import { useLocation } from 'react-router-dom';
 import { SITE_NAME, SITE_URL } from '../../data/static.js';
 import { buildCanonical, buildPageTitle } from '../../utils/seo.js';
@@ -22,8 +22,7 @@ export default function Meta({
     'Holy Trinity Sloane Square: the nave looking east toward the Burne-Jones window';
 
   return (
-    <Helmet prioritizeSeoTags>
-      <html lang="en-GB" />
+    <Head>
       <title>{pageTitle}</title>
       {description && <meta name="description" content={description} />}
       <link rel="canonical" href={canonical} />
@@ -49,6 +48,6 @@ export default function Meta({
           {JSON.stringify(structuredData)}
         </script>
       )}
-    </Helmet>
+    </Head>
   );
 }

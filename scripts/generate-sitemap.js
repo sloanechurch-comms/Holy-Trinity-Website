@@ -7,6 +7,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { fetchDynamicRoutes } from '../src/sanity/ssg-routes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -45,26 +46,11 @@ const STATIC_ROUTES = [
 ];
 
 async function fetchSanityRoutes() {
-  const projectId = process.env.VITE_SANITY_PROJECT_ID;
-  const dataset = process.env.VITE_SANITY_DATASET || 'production';
-  const apiVersion = process.env.VITE_SANITY_API_VERSION || '2026-05-16';
-  if (!projectId || projectId === 'placeholder-project-id') return [];
-  const query = encodeURIComponent(
-    '{"events": *[_type == "event"]{"slug": slug.current}, "news": *[_type == "newsPost"]{"slug": slug.current}}',
-  );
-  const url = `https://${projectId}.api.sanity.io/v${apiVersion}/data/query/${dataset}?query=${query}`;
-  try {
-    const r = await fetch(url);
-    if (!r.ok) return [];
-    const json = await r.json();
-    const eventRoutes = (json.result?.events || []).filter((e) => e.slug).map((e) => `/music-events/events/${e.slug}`);
-    const newsRoutes = (json.result?.news || []).filter((n) => n.slug).map((n) => `/support/news/${n.slug}`);
-    return [...eventRoutes, ...newsRoutes];
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.warn('[sitemap] Sanity fetch failed, continuing with static routes only:', err.message);
-    return [];
-  }
+  const { eventSlugs, newsSlugs } = await fetchDynamicRoutes();
+  return [
+    ...eventSlugs.map((s) => `/music-events/events/${s}`),
+    ...newsSlugs.map((s) => `/support/news/${s}`),
+  ];
 }
 
 function urlEntry(route) {
