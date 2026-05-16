@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useConsent } from '../../hooks/useConsent.js';
@@ -8,8 +8,13 @@ export default function CookieBanner() {
   const [showPrefs, setShowPrefs] = useState(false);
   const [analytics, setAnalytics] = useState(false);
   const [marketing, setMarketing] = useState(false);
+  // Skip rendering during SSG and the very first client paint. This keeps
+  // the banner out of the static HTML for every page and avoids a flash
+  // for returning visitors whose consent decision is in localStorage.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
-  if (hasDecided) return null;
+  if (!mounted || hasDecided) return null;
 
   return (
     <AnimatePresence>
