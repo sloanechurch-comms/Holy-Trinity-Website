@@ -1,0 +1,22 @@
+services:
+  web:
+    container_name: htss-web
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    volumes:
+      # Bind-mount source for hot reload. node_modules is kept inside the
+      # container so the Linux-built native deps aren't shadowed by your Mac's.
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    environment:
+      # Force polling — required for Vite HMR to see file changes through
+      # the Docker bind mount on Mac.
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    stdin_open: true
+    tty: true

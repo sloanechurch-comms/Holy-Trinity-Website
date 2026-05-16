@@ -1,0 +1,22 @@
+# Dockerfile.dev — local development image for the HTSS website.
+# Used by docker-compose.yml. Not used in production.
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install dependencies first (better layer caching).
+# We use --legacy-peer-deps because @sanity/vision has a peer-dep
+# version constraint that conflicts with another dependency.
+COPY package.json package-lock.json* ./
+RUN npm install --legacy-peer-deps --no-audit --no-fund
+
+# App source is bind-mounted at runtime via docker-compose so edits
+# show up live. The COPY here makes the image usable on its own
+# if you ever want to build it without compose.
+COPY . .
+
+EXPOSE 5173
+
+# Vite dev server. --host 0.0.0.0 makes the port reachable from the
+# host machine (otherwise the server only listens inside the container).
+CMD ["npx", "vite", "--host", "0.0.0.0", "--port", "5173"]
